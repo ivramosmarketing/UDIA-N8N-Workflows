@@ -1,0 +1,148 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-03-05T15:12:13.372Z",
+  "id": "BidrNMaMXDJ6vYxF",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "UDIA Mi primer flujo sencillo",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Newsletter Udia N8N",
+        "formDescription": "Las últimas noticias de N8N en tu email",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Nombre",
+              "placeholder": "Aquí tu nombre "
+            },
+            {
+              "fieldLabel": "Email",
+              "fieldType": "email",
+              "placeholder": "Tu tu Email"
+            },
+            {
+              "fieldType": "html",
+              "html": "<div class=\"checkbox-container\">\n  <input type=\"checkbox\" id=\"privacidad\" name=\"privacidad\" value=\"aceptado\" required>\n  <label for=\"privacidad\">\n    He leído y acepto la <a href=\"/tu-url-de-politica\" target=\"_blank\">política de privacidad</a>.\n  </label>\n</div>"
+            }
+          ]
+        },
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.5,
+      "position": [
+        0,
+        0
+      ],
+      "id": "5d9c9d16-8560-4c30-bf52-8f3cd164daa2",
+      "name": "On form submission",
+      "webhookId": "2c005457-6459-4462-9dca-a4e03c54dde0"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1etHWuLtZ2l-3e0F1xjzlAJkCd-NmOohYQi3M4XlhySA/edit?gid=0#gid=0",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Hoja 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1etHWuLtZ2l-3e0F1xjzlAJkCd-NmOohYQi3M4XlhySA/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Email": "={{ $json.Email }}",
+            "Nombre": "={{ $json.Nombre }}"
+          },
+          "matchingColumns": [
+            "Email"
+          ],
+          "schema": [
+            {
+              "id": "Nombre",
+              "displayName": "Nombre",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        208,
+        0
+      ],
+      "id": "4d63483d-e3d3-4c55-b849-a5a495302d31",
+      "name": "Append or update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "KR5gC5bmlpsMnhx7",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-03-05T15:12:13.375Z",
+      "createdAt": "2026-03-05T15:12:13.375Z",
+      "role": "workflow:owner",
+      "workflowId": "BidrNMaMXDJ6vYxF",
+      "projectId": "sqRrmI8D55iXyASx"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-03-05T16:03:09.228Z",
+  "versionId": "22992e8c-ef6e-4ec7-a9c0-c0028c89731f"
+}
