@@ -1,0 +1,395 @@
+{
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2026-03-09T14:32:46.000Z",
+    "createdAt": "2026-03-09T14:32:36.405Z",
+    "versionId": "6868be7c-444f-4a43-a4e7-263c9f88e186",
+    "workflowId": "T5uuILfzergCbYbu",
+    "nodes": [
+      {
+        "parameters": {
+          "public": true,
+          "mode": "webhook",
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+        "typeVersion": 1.4,
+        "position": [
+          0,
+          0
+        ],
+        "id": "3b129b75-3a99-421e-8016-e82fc94bb1a8",
+        "name": "When chat message received",
+        "webhookId": "f22d2e75-8c3d-43c4-a5e7-e611361453c2"
+      },
+      {
+        "parameters": {
+          "options": {
+            "systemMessage": "Eres un asistente experto y profesional especializado en la planificación de mi viaje a Bali. Para responder a cualquier pregunta, OBLIGATORIAMENTE debes usar la herramienta Pinecone Vector Store para obtener los datos correctos.\n\nREGLAS DE ESTILO MUY IMPORTANTES:\n\nResponde con naturalidad, autoridad y de forma directa.\n\nNUNCA uses frases como \"Según tus notas\", \"El documento dice\", \"En la base de datos encontré\" o similares. Finge que esta información es tu propio conocimiento experto.\n\nSi Pinecone no te devuelve resultados o no tienes la respuesta exacta, NUNCA te inventes la información usando tus conocimientos generales. Simplemente responde de forma educada: \"Lo siento, pero no tengo esa información planificada para el viaje.\""
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.agent",
+        "typeVersion": 3.1,
+        "position": [
+          208,
+          0
+        ],
+        "id": "e23d760f-b4f3-46dd-a652-0dd42b60aa25",
+        "name": "AI Agent"
+      },
+      {
+        "parameters": {
+          "model": {
+            "__rl": true,
+            "value": "gpt-5-mini",
+            "mode": "list",
+            "cachedResultName": "gpt-5-mini"
+          },
+          "builtInTools": {},
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+        "typeVersion": 1.3,
+        "position": [
+          80,
+          208
+        ],
+        "id": "80645c50-9368-4e03-8d31-17fd3f3e3dd5",
+        "name": "OpenAI Chat Model",
+        "credentials": {
+          "openAiApi": {
+            "id": "gEzPBcRmEe0j48wa",
+            "name": "OpenAi account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "contextWindowLength": 8
+        },
+        "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+        "typeVersion": 1.3,
+        "position": [
+          224,
+          208
+        ],
+        "id": "0612939b-c75c-4745-baff-d4e3974e6428",
+        "name": "Simple Memory"
+      },
+      {
+        "parameters": {
+          "mode": "retrieve-as-tool",
+          "toolDescription": "Herramienta obligatoria para buscar información sobre el viaje a Bali, presupuestos, visados, transporte y reglas. Úsala SIEMPRE que el usuario haga una pregunta para buscar las notas de su viaje.\n\n",
+          "pineconeIndex": {
+            "__rl": true,
+            "value": "ragudia",
+            "mode": "list",
+            "cachedResultName": "ragudia"
+          },
+          "options": {
+            "pineconeNamespace": "udia_rag"
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.vectorStorePinecone",
+        "typeVersion": 1.3,
+        "position": [
+          416,
+          224
+        ],
+        "id": "caadbb05-9ac9-40d9-b08a-d6019c958b74",
+        "name": "Pinecone Vector Store",
+        "credentials": {
+          "pineconeApi": {
+            "id": "zCodaTVHTy2Phtkd",
+            "name": "PineconeApi account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+        "typeVersion": 1.2,
+        "position": [
+          512,
+          432
+        ],
+        "id": "4932ad00-bd77-4559-aec1-c203a415f23e",
+        "name": "Embeddings OpenAI",
+        "credentials": {
+          "openAiApi": {
+            "id": "gEzPBcRmEe0j48wa",
+            "name": "OpenAi account"
+          }
+        }
+      }
+    ],
+    "connections": {
+      "When chat message received": {
+        "main": [
+          [
+            {
+              "node": "AI Agent",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "OpenAI Chat Model": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "AI Agent",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Simple Memory": {
+        "ai_memory": [
+          [
+            {
+              "node": "AI Agent",
+              "type": "ai_memory",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Pinecone Vector Store": {
+        "ai_tool": [
+          [
+            {
+              "node": "AI Agent",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Embeddings OpenAI": {
+        "ai_embedding": [
+          [
+            {
+              "node": "Pinecone Vector Store",
+              "type": "ai_embedding",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Iván Ramos Abelaira",
+    "name": "Version 6868be7c",
+    "description": "",
+    "autosaved": true
+  },
+  "activeVersionId": "6868be7c-444f-4a43-a4e7-263c9f88e186",
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pinecone Vector Store": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Pinecone Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-03-09T11:42:58.432Z",
+  "id": "T5uuILfzergCbYbu",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Udia RAG: Chatbot",
+  "nodes": [
+    {
+      "parameters": {
+        "public": true,
+        "mode": "webhook",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        0,
+        0
+      ],
+      "id": "3b129b75-3a99-421e-8016-e82fc94bb1a8",
+      "name": "When chat message received",
+      "webhookId": "f22d2e75-8c3d-43c4-a5e7-e611361453c2"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "Eres un asistente experto y profesional especializado en la planificación de mi viaje a Bali. Para responder a cualquier pregunta, OBLIGATORIAMENTE debes usar la herramienta Pinecone Vector Store para obtener los datos correctos.\n\nREGLAS DE ESTILO MUY IMPORTANTES:\n\nResponde con naturalidad, autoridad y de forma directa.\n\nNUNCA uses frases como \"Según tus notas\", \"El documento dice\", \"En la base de datos encontré\" o similares. Finge que esta información es tu propio conocimiento experto.\n\nSi Pinecone no te devuelve resultados o no tienes la respuesta exacta, NUNCA te inventes la información usando tus conocimientos generales. Simplemente responde de forma educada: \"Lo siento, pero no tengo esa información planificada para el viaje.\""
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "e23d760f-b4f3-46dd-a652-0dd42b60aa25",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-5-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-5-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        80,
+        208
+      ],
+      "id": "80645c50-9368-4e03-8d31-17fd3f3e3dd5",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "gEzPBcRmEe0j48wa",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "contextWindowLength": 8
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        224,
+        208
+      ],
+      "id": "0612939b-c75c-4745-baff-d4e3974e6428",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolDescription": "Herramienta obligatoria para buscar información sobre el viaje a Bali, presupuestos, visados, transporte y reglas. Úsala SIEMPRE que el usuario haga una pregunta para buscar las notas de su viaje.\n\n",
+        "pineconeIndex": {
+          "__rl": true,
+          "value": "ragudia",
+          "mode": "list",
+          "cachedResultName": "ragudia"
+        },
+        "options": {
+          "pineconeNamespace": "udia_rag"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStorePinecone",
+      "typeVersion": 1.3,
+      "position": [
+        416,
+        224
+      ],
+      "id": "caadbb05-9ac9-40d9-b08a-d6019c958b74",
+      "name": "Pinecone Vector Store",
+      "credentials": {
+        "pineconeApi": {
+          "id": "zCodaTVHTy2Phtkd",
+          "name": "PineconeApi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        512,
+        432
+      ],
+      "id": "4932ad00-bd77-4559-aec1-c203a415f23e",
+      "name": "Embeddings OpenAI",
+      "credentials": {
+        "openAiApi": {
+          "id": "gEzPBcRmEe0j48wa",
+          "name": "OpenAi account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-03-09T11:42:58.434Z",
+      "createdAt": "2026-03-09T11:42:58.434Z",
+      "role": "workflow:owner",
+      "workflowId": "T5uuILfzergCbYbu",
+      "projectId": "sqRrmI8D55iXyASx"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2026-03-09T14:32:36.405Z",
+  "versionId": "6868be7c-444f-4a43-a4e7-263c9f88e186"
+}
