@@ -1,0 +1,141 @@
+{
+  "active": true,
+  "activeVersion": {
+    "updatedAt": "2026-03-06T11:29:07.000Z",
+    "createdAt": "2026-03-06T11:23:13.061Z",
+    "versionId": "aa45a690-492e-497f-ba5d-fb6479e55dcc",
+    "workflowId": "QdKLqvy7EaFDrQGW",
+    "nodes": [
+      {
+        "parameters": {},
+        "type": "n8n-nodes-base.errorTrigger",
+        "typeVersion": 1,
+        "position": [
+          0,
+          0
+        ],
+        "id": "a8c0fda6-4812-4ae2-ad0e-135f19d7d64d",
+        "name": "Error Trigger"
+      },
+      {
+        "parameters": {
+          "chatId": "1125150001",
+          "text": "=¡Error!:  {{ $json.execution.error.message }}\n\nUltimo nodo ejecutado {{ $json.execution.lastNodeExecuted }}",
+          "additionalFields": {
+            "appendAttribution": false
+          }
+        },
+        "type": "n8n-nodes-base.telegram",
+        "typeVersion": 1.2,
+        "position": [
+          208,
+          0
+        ],
+        "id": "e28571f5-7c16-4c34-b77b-e9ea5ee9eb17",
+        "name": "Send a text message",
+        "webhookId": "f47cd750-fbac-48dc-88f7-9b2962e239e0",
+        "credentials": {
+          "telegramApi": {
+            "id": "vHVtu7VGUoQHhEG9",
+            "name": "Telegram account"
+          }
+        }
+      }
+    ],
+    "connections": {
+      "Error Trigger": {
+        "main": [
+          [
+            {
+              "node": "Send a text message",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Iván Ramos Abelaira",
+    "name": "Version aa45a690",
+    "description": "",
+    "autosaved": true
+  },
+  "activeVersionId": "aa45a690-492e-497f-ba5d-fb6479e55dcc",
+  "connections": {
+    "Error Trigger": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-03-06T11:18:55.428Z",
+  "id": "QdKLqvy7EaFDrQGW",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Udia Error trigger",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "a8c0fda6-4812-4ae2-ad0e-135f19d7d64d",
+      "name": "Error Trigger"
+    },
+    {
+      "parameters": {
+        "chatId": "1125150001",
+        "text": "=¡Error!:  {{ $json.execution.error.message }}\n\nUltimo nodo ejecutado {{ $json.execution.lastNodeExecuted }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        208,
+        0
+      ],
+      "id": "e28571f5-7c16-4c34-b77b-e9ea5ee9eb17",
+      "name": "Send a text message",
+      "webhookId": "f47cd750-fbac-48dc-88f7-9b2962e239e0",
+      "credentials": {
+        "telegramApi": {
+          "id": "vHVtu7VGUoQHhEG9",
+          "name": "Telegram account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-03-06T11:18:55.429Z",
+      "createdAt": "2026-03-06T11:18:55.429Z",
+      "role": "workflow:owner",
+      "workflowId": "QdKLqvy7EaFDrQGW",
+      "projectId": "sqRrmI8D55iXyASx"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-03-06T11:23:13.060Z",
+  "versionId": "aa45a690-492e-497f-ba5d-fb6479e55dcc"
+}
