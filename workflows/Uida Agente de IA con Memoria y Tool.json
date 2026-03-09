@@ -1,0 +1,257 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "API GOOGLE": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-03-06T15:13:09.471Z",
+  "id": "mzjZGtxUoBsu4ec0",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Uida Agente de IA con Memoria y Tool",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -448,
+        -80
+      ],
+      "id": "08a626e6-32a7-49b9-8e85-2eb27c3d8c66",
+      "name": "When chat message received",
+      "webhookId": "a095cf05-5efd-4341-970d-7017794847d1"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1iJh6FcCrdd5LHygg6K6HegsnUwgOSQL_AC3L2c2jr-w/edit?gid=0#gid=0",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Hoja 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1iJh6FcCrdd5LHygg6K6HegsnUwgOSQL_AC3L2c2jr-w/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Busqueda": "={{ $json.chatInput }}"
+          },
+          "matchingColumns": [
+            "Busqueda"
+          ],
+          "schema": [
+            {
+              "id": "Busqueda",
+              "displayName": "Busqueda",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Respuesta",
+              "displayName": "Respuesta",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -176,
+        -80
+      ],
+      "id": "a4d37117-0ff1-4f21-8df9-dcbe9881bb0f",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "KR5gC5bmlpsMnhx7",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('When chat message received').item.json.chatInput }}",
+        "options": {
+          "systemMessage": "Eres un investigador estricto. NO puedes responder usando tu propio conocimiento. OBLIGATORIAMENTE tienes que usar la herramienta conectada para buscar en internet cualquier cosa que te pida el usuario.\nPasos a seguir:\n\nRecibes el mensaje del usuario.\n\nEjecutas UNA SOLA VEZ la herramienta de búsqueda.\n\nExtraes las URLs de los resultados y se las muestras al usuario.\n\nFin de la respuesta. No añadas consejos adicionales."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        32,
+        -80
+      ],
+      "id": "27984212-928a-46bd-a967-b0f86f39740f",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('When chat message received').item.json.sessionId }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        96,
+        176
+      ],
+      "id": "74713455-1c45-45f7-b505-10a006dc1b92",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "toolDescription": "Debes usar esta herramienta SIEMPRE para buscar en internet. Te devolverá resultados web y URLs reales.",
+        "method": "POST",
+        "url": "https://google-api31.p.rapidapi.com/websearch",
+        "sendQuery": true,
+        "specifyQuery": "json",
+        "jsonQuery": "={\n  \"text\": \"{{ $fromAI('busqueda') }}\",\n  \"safesearch\": \"off\",\n  \"timelimit\": \"\",\n  \"region\": \"es-es\",\n  \"max_results\": 3\n}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-RapidAPI-Host",
+              "value": "google-api31.p.rapidapi.com"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "X-RapidAPI-Key",
+              "value": "c9e04f83fcmsh33fa337e5c83e70p1db8c2jsn90c1fd0022e8"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.4,
+      "position": [
+        224,
+        128
+      ],
+      "id": "6c1b763a-2320-4641-9c02-478950ab5aea",
+      "name": "API GOOGLE"
+    },
+    {
+      "parameters": {
+        "model": "llama-3.3-70b-versatile",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        -112,
+        128
+      ],
+      "id": "4d5b263e-04cd-41cf-84e5-b66d8e916c44",
+      "name": "Groq Chat Model",
+      "credentials": {
+        "groqApi": {
+          "id": "UT30kRN6Kmn5wGf4",
+          "name": "Groq account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-03-06T15:13:09.473Z",
+      "createdAt": "2026-03-06T15:13:09.473Z",
+      "role": "workflow:owner",
+      "workflowId": "mzjZGtxUoBsu4ec0",
+      "projectId": "sqRrmI8D55iXyASx"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-03-06T16:13:58.252Z",
+  "versionId": "6b37fdc0-ee8d-4658-960a-8024de3c8d4e"
+}
