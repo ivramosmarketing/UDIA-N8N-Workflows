@@ -1114,7 +1114,9 @@
   ],
   "staticData": {
     "node:Every 12 hours": {
-      "recurrenceRules": []
+      "recurrenceRules": [
+        0
+      ]
     }
   },
   "tags": [],
