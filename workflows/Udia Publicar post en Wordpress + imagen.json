@@ -1,0 +1,69 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Creo un post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-03-09T14:48:00.736Z",
+  "id": "ZXkwANdqCVapYFgg",
+  "isArchived": false,
+  "meta": null,
+  "name": "Udia Publicar post en Wordpress + imagen",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "6a0d8f64-b1f0-45ca-8583-98a36c227b1a",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.wordpress",
+      "typeVersion": 1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "3aaa442c-9258-416b-864d-58b039512208",
+      "name": "Creo un post"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-03-09T14:48:00.738Z",
+      "createdAt": "2026-03-09T14:48:00.738Z",
+      "role": "workflow:owner",
+      "workflowId": "ZXkwANdqCVapYFgg",
+      "projectId": "sqRrmI8D55iXyASx"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-03-09T14:48:30.616Z",
+  "versionId": "f12e8fc1-f9ff-4967-80e1-980d7c017a1a"
+}
