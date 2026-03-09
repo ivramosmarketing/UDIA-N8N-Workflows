@@ -1,0 +1,58 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {},
+  "createdAt": "2026-03-06T11:31:36.083Z",
+  "id": "HUt76uSOXJuVfQas",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Udia Securizacion de webhooks",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "udiasecurity",
+        "authentication": "jwtAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "a8e90f4d-e715-4ea3-825f-2233aef61134",
+      "name": "Webhook",
+      "webhookId": "e70ae32a-56c3-4a49-8eb6-3179d5b64229",
+      "credentials": {
+        "jwtAuth": {
+          "id": "DXj01L62oqIahYcb",
+          "name": "JWT Auth account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-03-06T11:31:36.085Z",
+      "createdAt": "2026-03-06T11:31:36.085Z",
+      "role": "workflow:owner",
+      "workflowId": "HUt76uSOXJuVfQas",
+      "projectId": "sqRrmI8D55iXyASx"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-03-06T11:37:34.502Z",
+  "versionId": "48acb1f2-48a2-48d7-a0b8-126fed785d41"
+}
