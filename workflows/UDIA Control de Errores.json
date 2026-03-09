@@ -1,0 +1,137 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Stop and Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-03-06T11:15:54.346Z",
+  "id": "U95vIiBAgNsilPBe",
+  "isArchived": false,
+  "meta": null,
+  "name": "UDIA Control de Errores",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -16,
+        16
+      ],
+      "id": "fb1e4bf9-aa7e-4087-9561-e8c9e8de02b9",
+      "name": "When chat message received",
+      "webhookId": "4730cfea-6807-4bef-8081-caa41f0f86ab"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "21947a29-76a1-4b9c-99d5-4ab3d8d8378e",
+              "leftValue": "={{ $json.chatInput }}",
+              "rightValue": "hola",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        256,
+        -32
+      ],
+      "id": "03c7d896-25ae-4968-809e-2f161afc2eb3",
+      "name": "If"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        464,
+        -128
+      ],
+      "id": "2b57bb64-24ba-4b81-8184-5a6c65deaeb2",
+      "name": "No Operation, do nothing"
+    },
+    {
+      "parameters": {
+        "errorMessage": "¡Ha ocurrido un error! te enviamos telegram"
+      },
+      "type": "n8n-nodes-base.stopAndError",
+      "typeVersion": 1,
+      "position": [
+        464,
+        64
+      ],
+      "id": "8ea9c19d-924b-4fdb-b26e-0171971ce237",
+      "name": "Stop and Error"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false,
+    "timeSavedMode": "fixed",
+    "timezone": "Europe/Madrid",
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-03-06T11:15:54.348Z",
+      "createdAt": "2026-03-06T11:15:54.348Z",
+      "role": "workflow:owner",
+      "workflowId": "U95vIiBAgNsilPBe",
+      "projectId": "sqRrmI8D55iXyASx"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-03-06T11:20:11.323Z",
+  "versionId": "5fa156e8-ba9b-4708-8eec-a3dc00462875"
+}
