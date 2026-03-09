@@ -1,0 +1,121 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Get many bases",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many bases": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "createdAt": "2026-03-06T09:40:23.875Z",
+  "id": "FOIaroT2hPk015OX",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "UDIA Credenciales",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "d8ec41fc-b56e-4660-a0e2-5e00447af80e",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "resource": "base",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        352,
+        -128
+      ],
+      "id": "787412c5-f2b7-4968-8a80-cd840c2cf3f4",
+      "name": "Get many bases",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "4T3GxInluBIQuKlU",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-5-mini-2025-08-07",
+          "mode": "list",
+          "cachedResultName": "GPT-5-MINI-2025-08-07"
+        },
+        "responses": {
+          "values": [
+            {
+              "content": "Hola, saludos a todos los que estais ahí"
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.1,
+      "position": [
+        256,
+        320
+      ],
+      "id": "fa20d100-b317-430d-9cc3-1bd41632cd4f",
+      "name": "Message a model",
+      "credentials": {
+        "openAiApi": {
+          "id": "gEzPBcRmEe0j48wa",
+          "name": "OpenAi account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-03-06T09:40:23.878Z",
+      "createdAt": "2026-03-06T09:40:23.878Z",
+      "role": "workflow:owner",
+      "workflowId": "FOIaroT2hPk015OX",
+      "projectId": "sqRrmI8D55iXyASx"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-03-06T09:54:58.805Z",
+  "versionId": "d8712d1c-f1a4-4866-80f4-920d384e2c49"
+}
