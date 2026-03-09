@@ -1,0 +1,114 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "RSS Read",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RSS Read": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Code in JavaScript1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-03-06T11:01:56.850Z",
+  "id": "layoQjp1ssTNLaqw",
+  "isArchived": false,
+  "meta": null,
+  "name": "Udia Nodo funciones",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -480,
+        -16
+      ],
+      "id": "605c0dbd-38b3-481d-8e4a-f433442b2cfb",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "url": "https://www.techradar.com/rss",
+        "options": {
+          "ignoreSSL": false
+        }
+      },
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [
+        -272,
+        -16
+      ],
+      "id": "2c94e360-c056-4e6c-9f68-bd2d1ecca3be",
+      "name": "RSS Read"
+    },
+    {
+      "parameters": {
+        "jsCode": "for (const item of $input.all()) {\n  let imageUrl = null;\n\n  // 1. Intentamos sacar la imagen del \"enclosure\" (tu ejemplo)\n  if (item.json.enclosure && item.json.enclosure.url) {\n    imageUrl = item.json.enclosure.url;\n  } \n  // 2. Si no hay enclosure, buscamos dentro de \"content:encoded\" o \"content\"\n  else {\n    const content = item.json['content:encoded'] || item.json.content || '';\n    // Usamos una expresión regular para encontrar la etiqueta <img> y sacar su src\n    const imgRegex = /<img[^>]+src=\"([^\">]+)\"/i;\n    const match = content.match(imgRegex);\n    \n    if (match && match[1]) {\n      imageUrl = match[1];\n    }\n  }\n\n  // 3. Añadimos la URL extraída al objeto final con el nombre \"image\"\n  item.json.image = imageUrl;\n}\n\nreturn $input.all();"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -96,
+        -256
+      ],
+      "id": "2718d4a5-8208-4357-ae81-230da0d42af6",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "jsCode": "for (const item of $input.all()) {\n  // Comprobamos que el item tenga un título para evitar errores\n  if (item.json.title) {\n    // Pasamos el título a minúsculas temporalmente para que detecte \"Insider\", \"INSIDER\", etc.\n    const tituloMinusculas = item.json.title.toLowerCase();\n    \n    // Si el título incluye \"insider\", le añadimos \"UDIA \" al principio\n    if (tituloMinusculas.includes(\"insider\")) {\n      item.json.title = \"UDIA \" + item.json.title;\n    }\n  }\n}\n\n// Devolvemos todos los elementos (modificados o no) al siguiente nodo\nreturn $input.all();"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -96,
+        -32
+      ],
+      "id": "b9ff0dc9-8272-47ab-8230-0161f4f578d9",
+      "name": "Code in JavaScript1"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-03-06T11:01:56.853Z",
+      "createdAt": "2026-03-06T11:01:56.853Z",
+      "role": "workflow:owner",
+      "workflowId": "layoQjp1ssTNLaqw",
+      "projectId": "sqRrmI8D55iXyASx"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-03-06T11:13:33.735Z",
+  "versionId": "0d7b1d19-e90a-4004-b3d3-cbe64c876ec6"
+}
