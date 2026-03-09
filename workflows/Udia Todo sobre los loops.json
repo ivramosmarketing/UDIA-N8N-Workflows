@@ -1,0 +1,296 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "RSS Read",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RSS Read": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "Limit",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-03-09T17:17:28.757Z",
+  "id": "lryBfXA6ABsYFWO7",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Udia Todo sobre los loops",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -592,
+        -96
+      ],
+      "id": "40be15a9-43df-4561-9baa-38f2534006e6",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "url": "https://es.wired.com/feed/rss",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [
+        -384,
+        -96
+      ],
+      "id": "d655c663-7588-448d-9ca8-1787b8f64fa3",
+      "name": "RSS Read"
+    },
+    {
+      "parameters": {
+        "batchSize": 3,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -176,
+        -96
+      ],
+      "id": "5a8b8aef-acbd-409a-b49a-58d5ec0a4506",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "24b7d49c-c677-4a46-a47d-8caa7b5cd433",
+              "name": "titulo_modificado",
+              "value": "=UDIA: {{ $json.title }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        32,
+        0
+      ],
+      "id": "50e54a0b-cddd-4e5a-a8e7-3d4a6bf30072",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1KFfI6l8kifk5ZJcbkhFJh2xUdvSavpixGYyGni0q2sE",
+          "mode": "list",
+          "cachedResultName": "UDIA Loops",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1KFfI6l8kifk5ZJcbkhFJh2xUdvSavpixGYyGni0q2sE/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Hoja 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1KFfI6l8kifk5ZJcbkhFJh2xUdvSavpixGYyGni0q2sE/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Titulo": "={{ $json.titulo_modificado }}",
+            "Descripcion": "={{ $('Loop Over Items').item.json.content }}",
+            "Autor": "={{ $('Loop Over Items').item.json.creator }}",
+            "Fecha": "={{ $('Loop Over Items').item.json.isoDate }}"
+          },
+          "matchingColumns": [
+            "titulo_modificado"
+          ],
+          "schema": [
+            {
+              "id": "Titulo",
+              "displayName": "Titulo",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Descripcion",
+              "displayName": "Descripcion",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Autor",
+              "displayName": "Autor",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Fecha",
+              "displayName": "Fecha",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        240,
+        0
+      ],
+      "id": "63d578be-728e-430a-9cb4-7565450b1695",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "KR5gC5bmlpsMnhx7",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "1125150001",
+        "text": "¡Loop completado!",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        368,
+        -464
+      ],
+      "id": "838facbe-c185-4a71-be33-faec907e80c3",
+      "name": "Send a text message",
+      "webhookId": "3aa329c7-fb8b-4b0a-af63-f9cf1ef84260",
+      "credentials": {
+        "telegramApi": {
+          "id": "vHVtu7VGUoQHhEG9",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        64,
+        -368
+      ],
+      "id": "8327b930-2499-428e-8ec6-fbcd4703da61",
+      "name": "Limit"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-03-09T17:17:28.760Z",
+      "createdAt": "2026-03-09T17:17:28.760Z",
+      "role": "workflow:owner",
+      "workflowId": "lryBfXA6ABsYFWO7",
+      "projectId": "sqRrmI8D55iXyASx"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-03-09T17:39:25.301Z",
+  "versionId": "527679ea-3f6a-44b8-a81e-81865d5af8cd"
+}
