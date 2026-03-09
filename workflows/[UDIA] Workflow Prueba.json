@@ -1,0 +1,48 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {},
+  "createdAt": "2026-03-05T14:58:58.877Z",
+  "id": "ipB8tjMCDtyDKGj2",
+  "isArchived": false,
+  "meta": null,
+  "name": "[UDIA] Workflow Prueba",
+  "nodes": [],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false,
+    "timeSavedMode": "fixed",
+    "timezone": "Europe/Madrid",
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-03-05T14:58:58.881Z",
+      "createdAt": "2026-03-05T14:58:58.881Z",
+      "role": "workflow:owner",
+      "workflowId": "ipB8tjMCDtyDKGj2",
+      "projectId": "sqRrmI8D55iXyASx"
+    }
+  ],
+  "staticData": null,
+  "tags": [
+    {
+      "updatedAt": "2026-03-05T15:00:16.284Z",
+      "createdAt": "2026-03-05T15:00:16.284Z",
+      "id": "gyh4vQXUQEhm90y1",
+      "name": "🔴Desarrollo"
+    },
+    {
+      "updatedAt": "2026-03-05T15:00:26.372Z",
+      "createdAt": "2026-03-05T15:00:26.372Z",
+      "id": "zlBdnV26ZlyPjrAZ",
+      "name": "🧠Udia"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2026-03-05T15:04:13.815Z",
+  "versionId": "55718ccc-74cd-4f6f-bd60-3fdce4ff070d"
+}
