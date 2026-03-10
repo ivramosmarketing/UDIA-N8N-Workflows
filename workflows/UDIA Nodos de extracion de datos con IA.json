@@ -1,0 +1,201 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "variables",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "variables": {
+      "main": [
+        [
+          {
+            "node": "Accedo al Sitemap",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Accedo al Sitemap": {
+      "main": [
+        [
+          {
+            "node": "Convierto a XML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convierto a XML": {
+      "main": [
+        [
+          {
+            "node": "Extraigo lo que necesito",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extraigo lo que necesito": {
+      "main": [
+        [
+          {
+            "node": "Limit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-03-10T09:21:13.331Z",
+  "id": "erGYRO281unEgr9n",
+  "isArchived": false,
+  "meta": null,
+  "name": "UDIA Nodos de extracion de datos con IA",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -256,
+        -48
+      ],
+      "id": "40786c6b-6600-4834-91f9-39227be75a5a",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "8e4bc233-eef6-4c75-b5f5-701d4361be89",
+              "name": "sitemap",
+              "value": "https://mascotalandia.es/sitemap-products-1-es.xml",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        16,
+        -48
+      ],
+      "id": "e7c88cb3-0a4d-447f-9162-023b735d94c1",
+      "name": "variables"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.sitemap }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        224,
+        -48
+      ],
+      "id": "8376b662-5469-4e92-a3c8-f18897841664",
+      "name": "Accedo al Sitemap"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.xml",
+      "typeVersion": 1,
+      "position": [
+        432,
+        -48
+      ],
+      "id": "96183aa0-54c7-44b6-956d-7a0c0842698a",
+      "name": "Convierto a XML"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "urlset.url",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        640,
+        -48
+      ],
+      "id": "80051ea5-0162-4778-98af-2d7d4b0cfee4",
+      "name": "Extraigo lo que necesito"
+    },
+    {
+      "parameters": {
+        "maxItems": 10
+      },
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        848,
+        -48
+      ],
+      "id": "38b54054-2773-4d15-adf1-06ef7f2e92f2",
+      "name": "Limit"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        1056,
+        -48
+      ],
+      "id": "c86dacd5-c846-4d67-a6a5-1a1de1d4f1d7",
+      "name": "Loop Over Items"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-03-10T09:21:13.334Z",
+      "createdAt": "2026-03-10T09:21:13.334Z",
+      "role": "workflow:owner",
+      "workflowId": "erGYRO281unEgr9n",
+      "projectId": "sqRrmI8D55iXyASx"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-03-10T09:32:53.025Z",
+  "versionId": "168a15d2-3df8-4aa7-a5fe-283dc1903adb"
+}
