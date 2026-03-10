@@ -298,8 +298,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.3,
       "position": [
-        80,
-        208
+        48,
+        288
       ],
       "id": "80645c50-9368-4e03-8d31-17fd3f3e3dd5",
       "name": "OpenAI Chat Model",
@@ -390,6 +390,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2026-03-09T14:32:36.405Z",
-  "versionId": "6868be7c-444f-4a43-a4e7-263c9f88e186"
+  "updatedAt": "2026-03-10T10:56:41.334Z",
+  "versionId": "44a97357-12aa-463e-8efe-ebe6c17f2ba0"
 }
