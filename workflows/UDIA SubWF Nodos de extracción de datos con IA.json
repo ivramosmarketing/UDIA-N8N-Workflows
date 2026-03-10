@@ -1,0 +1,220 @@
+{
+  "active": false,
+  "activeVersion": null,
+  "activeVersionId": null,
+  "connections": {
+    "Workflow Imput Trigger": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Accedo al producto",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Accedo al producto": {
+      "main": [
+        [
+          {
+            "node": "Information Extractor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Information Extractor",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-03-10T09:34:07.574Z",
+  "id": "P000k0SeaHRmIOVq",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "UDIA SubWF Nodos de extracción de datos con IA",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -720,
+        -32
+      ],
+      "id": "2808c10d-865d-4673-af0a-e2a9c2e4e248",
+      "name": "Workflow Imput Trigger",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": " {\n  \n  \n\"loc\": \n\"https://mascotalandia.es/26--natura-diet-daily-food-12kg-pienso-para-perros-con-pollo-y-arroz.html\",\n  \n  \n\"image:image\": \n{\n  \n  \n  \n\"image:loc\": \n\"https://mascotalandia.es/38-large_default/natura-diet-daily-food-12kg-pienso-para-perros-con-pollo-y-arroz.jpg\"\n  \n  \n}\n  \n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -512,
+        -32
+      ],
+      "id": "b11f9142-82e1-4a94-ae6f-faab63e766e6",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.loc }}",
+        "sendHeaders": true,
+        "specifyHeaders": "json",
+        "jsonHeaders": "{\n  \"User-Agent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36\",\n  \"Accept\": \"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8\",\n  \"Accept-Language\": \"en-US,en;q=0.5\",\n  \"Connection\": \"keep-alive\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        -304,
+        -32
+      ],
+      "id": "e57d4c52-b086-47d3-b353-2ee095c55a62",
+      "name": "Accedo al producto"
+    },
+    {
+      "parameters": {
+        "operation": "extractHtmlContent",
+        "extractionValues": {
+          "values": [
+            {
+              "key": "nombre",
+              "cssSelector": ".product_name"
+            },
+            {
+              "key": "marca",
+              "cssSelector": ".brand_centercolumn"
+            },
+            {
+              "key": "descripcion_corta",
+              "cssSelector": ".product-description"
+            },
+            {
+              "key": "descripcion_larga",
+              "cssSelector": ".info_content"
+            },
+            {
+              "key": "pvp",
+              "cssSelector": ".price_pvp"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        -96,
+        -144
+      ],
+      "id": "193fe9a4-e7bc-4f07-befd-568392a35b4f",
+      "name": "Datos"
+    },
+    {
+      "parameters": {
+        "text": "=Extrae toda la informacion del producto que te envío en HTML. \nTu debes devolver nombre, marca, descripcion corta, descripcion larga y precio\n\n {{ $json.data }}",
+        "attributes": {
+          "attributes": [
+            {
+              "name": "nombre",
+              "description": "nombre del producto",
+              "required": true
+            },
+            {
+              "name": "descripcion_corta",
+              "description": "descripcion corta del producto",
+              "required": true
+            },
+            {
+              "name": "descripcion_larga",
+              "description": "descripcion larga del producto",
+              "required": true
+            },
+            {
+              "name": "precio",
+              "description": "precio del producto"
+            }
+          ]
+        },
+        "options": {
+          "systemPromptTemplate": "Eres un experto extrayendo informacion de productos de codigos html."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.informationExtractor",
+      "typeVersion": 1.2,
+      "position": [
+        -128,
+        160
+      ],
+      "id": "5d5cf5f2-2744-4323-bdb6-e09891dd4baa",
+      "name": "Information Extractor"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -112,
+        384
+      ],
+      "id": "60bc16e3-303d-4ebe-aaa5-0407ee1369c5",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "hk4u5ESpzGICV03B",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "shared": [
+    {
+      "updatedAt": "2026-03-10T09:34:07.576Z",
+      "createdAt": "2026-03-10T09:34:07.576Z",
+      "role": "workflow:owner",
+      "workflowId": "P000k0SeaHRmIOVq",
+      "projectId": "sqRrmI8D55iXyASx"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-03-10T10:03:15.832Z",
+  "versionId": "5c8a1a04-0271-4e9d-bd5c-5958c85225a5"
+}
